@@ -10,7 +10,10 @@ namespace StarWars
         {
             Name = "Query";
 
+            // hero
             Field<CharacterInterface>("hero", resolve: context => data.GetDroidByIdAsync("3"));
+
+            // human
             Field<HumanType>(
                 "human",
                 arguments: new QueryArguments(
@@ -19,8 +22,8 @@ namespace StarWars
                 resolve: context => data.GetHumanByIdAsync(context.GetArgument<string>("id"))
             );
 
+            // droid
             Func<ResolveFieldContext, string, object> func = (context, id) => data.GetDroidByIdAsync(id);
-
             FieldDelegate<DroidType>(
                 "droid",
                 arguments: new QueryArguments(
@@ -28,6 +31,19 @@ namespace StarWars
                 ),
                 resolve: func
             );
+
+            // getAllDroids
+            Field<ListGraphType<DroidType>>(
+                "getAllDroids",
+                resolve: context => data.GetAllDroidsAsync()
+            );
+
+            // getAllDroidsWithFriends
+            Field<ListGraphType<DroidType>>(
+                "getAllDroidsWithFriends",
+                resolve: context => data.GetAllDroidsWithFriendsAsync()
+            );
+
         }
     }
 }

@@ -76,5 +76,24 @@ namespace StarWars
             _humans.Add(human);
             return human;
         }
+
+        // Custom
+        public Task<List<Droid>> GetAllDroidsAsync()
+        {
+            return Task.FromResult(_droids);
+        }
+
+        private static bool DoesDroidHaveAFriend(Droid droid)
+        {
+            if (droid.Friends == null || !droid.Friends.Any())
+                return false;
+            else
+                return true;
+        }
+        public Task<List<Droid>> GetAllDroidsWithFriendsAsync()
+        {
+            var droidsWithFriends = new List<Droid>();
+            return Task.FromResult(_droids.FindAll(DoesDroidHaveAFriend));
+        }
     }
 }
