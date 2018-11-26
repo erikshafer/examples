@@ -17,7 +17,10 @@ namespace StarWars
             Field<HumanType>(
                 "human",
                 arguments: new QueryArguments(
-                    new QueryArgument<NonNullGraphType<StringGraphType>> { Name = "id", Description = "id of the human" }
+                    new QueryArgument<NonNullGraphType<StringGraphType>>
+                    {
+                        Name = "id", Description = "id of the human"
+                    }
                 ),
                 resolve: context => data.GetHumanByIdAsync(context.GetArgument<string>("id"))
             );
@@ -27,7 +30,10 @@ namespace StarWars
             FieldDelegate<DroidType>(
                 "droid",
                 arguments: new QueryArguments(
-                    new QueryArgument<NonNullGraphType<StringGraphType>> { Name = "id", Description = "id of the droid" }
+                    new QueryArgument<NonNullGraphType<StringGraphType>>
+                    {
+                        Name = "id", Description = "id of the droid"
+                    }
                 ),
                 resolve: func
             );
@@ -44,6 +50,16 @@ namespace StarWars
                 resolve: context => data.GetAllDroidsWithFriendsAsync()
             );
 
+            Field<ListGraphType<CharacterType>>(
+                "charactersInFilm",
+                arguments: new QueryArguments(
+                    new QueryArgument<NonNullGraphType<IntGraphType>>
+                    {
+                        Name = "filmId", Description = "id of the film"
+                    }
+                ),
+                resolve: context => data.GetCharactersByFilmId(context.GetArgument<int>("filmId"))
+            );
         }
     }
 }

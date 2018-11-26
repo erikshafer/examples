@@ -17,4 +17,9 @@ namespace StarWars.Types
     {
         public string PrimaryFunction { get; set; }
     }
+
+    public class GenericCharacter : StarWarsCharacter
+    {
+
+    }
 }

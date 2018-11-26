@@ -29,6 +29,7 @@ namespace Example
             services.AddSingleton<HumanType>();
             services.AddSingleton<HumanInputType>();
             services.AddSingleton<DroidType>();
+            services.AddSingleton<CharacterType>();
             services.AddSingleton<CharacterInterface>();
             services.AddSingleton<EpisodeEnum>();
             services.AddSingleton<ISchema, StarWarsSchema>();
@@ -56,6 +57,7 @@ namespace Example
             {
                 Path = "/ui/playground"
             });
+            
         }
     }
 }

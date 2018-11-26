@@ -83,6 +83,12 @@ namespace StarWars
             return Task.FromResult(_droids);
         }
 
+        // Custom
+        public Task<List<Droid>> GetAllDroidsWithFriendsAsync()
+        {
+            var droidsWithFriends = new List<Droid>();
+            return Task.FromResult(_droids.FindAll(DoesDroidHaveAFriend));
+        }
         private static bool DoesDroidHaveAFriend(Droid droid)
         {
             if (droid.Friends == null || !droid.Friends.Any())
@@ -90,10 +96,24 @@ namespace StarWars
             else
                 return true;
         }
-        public Task<List<Droid>> GetAllDroidsWithFriendsAsync()
+
+        // Custom
+        public List<GenericCharacter> GetCharactersByFilmId(int filmId)
         {
-            var droidsWithFriends = new List<Droid>();
-            return Task.FromResult(_droids.FindAll(DoesDroidHaveAFriend));
+            var characterList = new List<GenericCharacter>();
+
+            foreach (var human in _humans)
+            {
+                if (human.AppearsIn.Any(f => f.Equals(filmId)))
+                    characterList.Add(new GenericCharacter { Id = human.Id, Name = human.Name });
+            }
+            foreach (var droid in _droids)
+            {
+                if (droid.AppearsIn.Any(f => f.Equals(filmId)))
+                    characterList.Add(new GenericCharacter { Id = droid.Id, Name = droid.Name });
+            }
+
+            return characterList;
         }
     }
 }
